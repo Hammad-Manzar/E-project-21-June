@@ -1,4 +1,5 @@
 import 'package:e_project/admin_login.dart';
+import 'package:e_project/listing_attractions_screens.dart';
 import 'package:flutter/material.dart';
 import 'listing_screen.dart';
 import 'notification.dart';
@@ -38,7 +39,7 @@ class _bottomState extends State<bottom> {
   }
   List<Widget> myScreen = [
     const HomeScreen(),
-    const ListingScreen(),
+    AttractionListingScreen(),
     const feedback(),
     const NotificationPage(),
 
