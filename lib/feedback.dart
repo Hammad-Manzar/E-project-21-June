@@ -10,8 +10,13 @@ class feedback extends StatefulWidget {
 class _feedbackState extends State<feedback> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Feedback Page')),
+    return Container(
+      margin: const EdgeInsets.all(20),
+      child: const Row(
+        children: [
+          Text('Feedback and Reviews',style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Railway',fontSize: 25),)
+        ],
+      ),
     );
   }
 }
