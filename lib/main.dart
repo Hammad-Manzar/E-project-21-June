@@ -1,7 +1,6 @@
 import 'package:e_project/admin_login.dart';
 import 'package:e_project/listing_attractions_screens.dart';
 import 'package:flutter/material.dart';
-import 'listing_screen.dart';
 import 'notification.dart';
 import 'feedback.dart';
 import 'home_screen.dart';
