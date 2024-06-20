@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'listing_attractions_screens.dart';
 
@@ -55,7 +56,7 @@ class _EditAttractionScreenState extends State<EditAttractionScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: (){
                 // Update the attraction with new details and return it
                 final updatedAttraction = Attraction(
                   name: _nameController.text,

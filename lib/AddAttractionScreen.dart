@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'listing_attractions_screens.dart';
 class AddAttractionScreen extends StatefulWidget {
@@ -42,7 +44,13 @@ class _AddAttractionScreenState extends State<AddAttractionScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async{
+                await FirebaseFirestore.instance.collection("attraction-listings").add({
+                  "attractionName" : _nameController.text,
+                  "attractionDescription" : _descriptionController.text,
+                  "attractionImage" : _imageUrlController.text
+                });
+
                 final newAttraction = Attraction(
                   name: _nameController.text,
                   description: _descriptionController.text,

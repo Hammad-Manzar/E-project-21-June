@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'edit_attraction_screen.dart';
 import 'package:e_project/AddAttractionScreen.dart';
+import 'package:flutter/material.dart';
 
 class AttractionListingScreen extends StatefulWidget {
   @override
@@ -10,14 +12,14 @@ class AttractionListingScreen extends StatefulWidget {
 class _AttractionListingScreenState extends State<AttractionListingScreen> {
   final List<Attraction> attractions = [
     Attraction(
-      name: 'Statue of Liberty',
-      description: 'A symbol of freedom and democracy located in New York City.',
-      imageUrl: 'https://example.com/statue_of_liberty.jpg',
+      name: 'Princess of Hope',
+      description: 'The Princess of Hope is a famous natural rock formation in Balochistan, Pakistan, known for its unique resemblance to the profile of a princess, drawing visitors for its natural beauty and geological significance.',
+      imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYE0_Bwx7NmbpSuSzFks9654Zdz0fcXLI28A&s',
     ),
     Attraction(
-      name: 'Eiffel Tower',
-      description: 'Iconic iron lattice tower located in Paris, France.',
-      imageUrl: 'https://example.com/eiffel_tower.jpg',
+      name: 'K2',
+      description: 'K2 is the second-highest mountain in the world, renowned for its challenging ascent and stunning beauty.',
+      imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-oIntW4X0x-xXGGeF-smSM5rK-UxDhlss3A&s',
     ),
     // Add more attractions as needed
   ];
@@ -78,7 +80,7 @@ class _AttractionListingScreenState extends State<AttractionListingScreen> {
                   ),
                   IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () {
+                    onPressed: (){
                       _deleteAttraction(index);
                     },
                   ),
