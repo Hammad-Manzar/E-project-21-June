@@ -1,8 +1,13 @@
+import 'package:e_project/home.dart';
 import 'package:e_project/home_screen.dart';
 import 'package:e_project/main.dart';
+import 'package:e_project/stack_registeration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:email_validator_flutter/email_validator_flutter.dart';
+
+
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -18,23 +23,40 @@ class _AdminLoginState extends State<AdminLogin> {
   final TextEditingController userEmail = TextEditingController();
   final TextEditingController userPass = TextEditingController();
 
+
   void login() async {
-    String email = userEmail.text;
+
     String password = userPass.text;
 
-    if (email == "admin" && password == "12345678") {
+
+    if (userEmail.text == "admin" && password == "12345678") {
       SharedPreferences userCred = await SharedPreferences.getInstance();
-      userCred.setString("email", email);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const bottom()));
+      userCred.setString("email", userEmail.text!);
+      SnackBar(content: Text("User Logged in as: ${userEmail.text}"),
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        backgroundColor: Colors.green,);
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const bottom()));
+      userEmail.clear();
+      userPass.clear();
     } else {
       try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password,
+          email: userEmail.text!,
+          password: userPass.text,
         );
         SharedPreferences userCred = await SharedPreferences.getInstance();
-        userCred.setString("email", email);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+        userCred.setString("email", userEmail.text);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("User Logged in as: ${userEmail.text}"),
+              behavior: SnackBarBehavior.floating,
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              backgroundColor: Colors.green,));
+        userEmail.clear();
+        userPass.clear();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HomeScreenUi(),));
+
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(e.code.toString())),
@@ -50,12 +72,17 @@ class _AdminLoginState extends State<AdminLogin> {
     userPass.dispose();
     super.dispose();
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     var time = DateTime.now();
+    EmailValidatorFlutter emailValidatorFlutter = EmailValidatorFlutter();
+
     return  Scaffold(
       body: Form(
-        key: formKey,
+        // key: formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,8 +105,9 @@ radius: 100,
 validator: (value){
   if(value == null || value.isEmpty || value==' '){
 return "Please Enter correct email Address";
-  }else{
-    return null;
+  }
+  if(emailValidatorFlutter.validateEmail(value) == null){
+    return "Email is not Valid";
   }
 },
                 decoration: const InputDecoration(
@@ -135,26 +163,15 @@ return "Please Enter correct email Address";
             ),
             OutlinedButton(
                 onPressed: (){
-                  if(formKey.currentState!.validate()){
-                    debugPrint(userEmail.text);
-                    debugPrint(userPass.text);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("User Logged in as: ${userEmail.text}, at ${time.hour}:${time.minute}"),
-                            behavior: SnackBarBehavior.floating,
-                            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                            backgroundColor: Colors.green,));
-                    userEmail.clear();
-                    userPass.clear();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const bottom(),));
-                  }
+                  login();
+
                 },
                 child: const Text("Login"),
             ),
             const SizedBox(
               height: 10,
             ),
-            const Text("Forgot Password?"),
+            const Text("Don't have an account?"),
             const SizedBox(
               height: 10,
             ),
@@ -162,12 +179,20 @@ return "Please Enter correct email Address";
               style: TextButton.styleFrom(
                 foregroundColor: Colors.blue,
               ),
-              onPressed: () { },
-              child: const Text('Reset Password'),
+              onPressed: () {  Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpScreen(),));
+              },
+              child: const Text('Register Now'),
             )
           ],
         ),
       ),
     );
   }
+}
+
+class EmailValidatorFlutter {
+  String? get text => null;
+
+  validateEmail(String email1) {}
 }

@@ -1,36 +1,52 @@
 import 'package:flutter/material.dart';
 
-class ReuseableContainer extends StatelessWidget {
-  const ReuseableContainer({
+class GridContainer extends StatelessWidget {
+  const GridContainer({
     super.key,
-    this.locationCity,
-  this.locationName,
-  this.locationImage,
-    this.locationDescription,
+    required this.name,
+    required this.image,
   });
-  final String? locationCity;
-  final String? locationName;
-  final String? locationImage;
-  final String? locationDescription;
+
+  final String? name;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.all(20),
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 150,
-
-          decoration: BoxDecoration(
-              color: Colors.blueAccent,
-              borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(image: NetworkImage(""))
+    return Container(
+      width: 160,
+      height: 240,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade400,
+            spreadRadius: 1,
+            blurRadius: 10,
+          )
+        ],
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4,vertical: 4),
+            width: double.infinity,
+            height: 230,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(image!))
+            ),
           ),
+          Container(
+              margin: const EdgeInsets.only(left: 4),
+              child: Text(name!,style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),))
 
-           child: locationCity == null ? Text("") : Text(locationCity!)
-           ),
-        ]);
+        ],
+      ),
+    );
   }
 }

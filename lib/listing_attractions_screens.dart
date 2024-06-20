@@ -44,7 +44,7 @@ class _AttractionListingScreenState extends State<AttractionListingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Attractions'),
+        title: Text("Listing Attractions",style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Railway',fontSize: 25),),
       ),
       body: ListView.builder(
         itemCount: attractions.length,
