@@ -15,11 +15,17 @@ class _AttractionListingScreenState extends State<AttractionListingScreen> {
       name: 'Princess of Hope',
       description: 'The Princess of Hope is a famous natural rock formation in Balochistan, Pakistan, known for its unique resemblance to the profile of a princess, drawing visitors for its natural beauty and geological significance.',
       imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYE0_Bwx7NmbpSuSzFks9654Zdz0fcXLI28A&s',
+      contactInfo: '',
+      openingHours: '',
+      ratings: '',
     ),
     Attraction(
       name: 'K2',
       description: 'K2 is the second-highest mountain in the world, renowned for its challenging ascent and stunning beauty.',
       imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-oIntW4X0x-xXGGeF-smSM5rK-UxDhlss3A&s',
+      contactInfo: '',
+      openingHours: '',
+      ratings: '',
     ),
     // Add more attractions as needed
   ];
@@ -152,6 +158,9 @@ class Attraction {
   String name;
   String description;
   String imageUrl;
+  String contactInfo;
+  String openingHours;
+  String ratings;
 
-  Attraction({required this.name, required this.description, required this.imageUrl});
+  Attraction({required this.name, required this.description, required this.imageUrl, required this.contactInfo, required this.openingHours, required this.ratings});
 }

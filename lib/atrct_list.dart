@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 class Attraction {
   final String name;
@@ -121,80 +122,105 @@ class _AttractionListState extends State<AttractionList> {
       ),
 
 
-      body: ListView.builder(
-        itemCount: filteredAttractions.length,
-        itemBuilder: (context, index) {
-          final attraction = filteredAttractions[index];
-          return Container(
-            height: 150,
-            child: Card(
-              margin: EdgeInsets.all(8.0),
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Stack(
-                  children: [
-                  Container(
-                  margin: EdgeInsets.symmetric(vertical: 10,horizontal: 05),
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(attraction.imageUrl),
-
-                    ),
-                  ),),
+      body: StreamBuilder(stream: FirebaseFirestore.instance.collection("attraction-listings").snapshots(),
+        builder: (context, snapshot) {
 
 
-                      Positioned(
-                        left: 120,
-                        top: 10,
-                        child: Text(
-                          attraction.name,
-                          style: TextStyle(
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
+        if(snapshot.hasData){
+
+          var dataLength = snapshot.data!.docs.length;
+
+          return ListView.builder(
+            itemCount: dataLength,
+            itemBuilder: (context, index) {
+              final attraction = filteredAttractions[index];
+
+              String name = snapshot.data!.docs[index]["attractionName"];
+              String image = snapshot.data!.docs[index]["attractionImage"];
+              String desc = snapshot.data!.docs[index]["attractionDescription"];
+
+              return Container(
+                height: 150,
+                child: Card(
+                  margin: EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10,horizontal: 05),
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(image),
+
+                            ),
+                          ),),
+
+
+                        Positioned(
+                          left: 120,
+                          top: 10,
+                          child: Text(
+                            name,
+                            style: TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
 
-                      Positioned(
+                        Positioned(
+                            left: 120,
+                            top: 35,
+                            child: Text(desc,style: TextStyle(fontSize: 16),)),
+                        SizedBox(height: 8.0),
+                        Positioned(
+                            left: 120,
+                            top: 53,
+                            child: Text("ContactInfo: 123-456-789",)),
+                        SizedBox(height: 8.0),
+                        Positioned(
+                            left: 120,
+                            top: 75,
+                            child: Text('Opening Hours: 24 Hrs')),
+                        SizedBox(height: 8.0),
+                        Positioned(
                           left: 120,
-                          top: 35,
-                          child: Text(attraction.description,style: TextStyle(fontSize: 11),)),
+                          top: 95,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Positioned(
+                                  left: 120,
+                                  top: 84,
+                                  child: Text('Rating: ')),
 
-                      Positioned(
-                          left: 120,
-                          top: 53,
-                          child: Text(attraction.contactInfo,)),
-                      SizedBox(height: 8.0),
-                      Positioned(
-                          left: 120,
-                          top: 75,
-                          child: Text('Opening Hours: ${attraction.openingHours}')),
-                      SizedBox(height: 8.0),
-                      Positioned(
-                        left: 120,
-                        top: 95,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Positioned(
-                                left: 120,
-                                top: 84,
-                                child: Text('Rating: ${attraction.rating}')),
-
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
 
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
-        },
-      ),
+        }
+
+        if(snapshot.hasError){
+          return Center(child: Icon(Icons.error,color: Colors.red,),);
+        }
+
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return Center(child: CircularProgressIndicator(),);
+        }
+
+        return Container();
+      },),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:e_project/admin_login.dart';
+import 'package:e_project/home.dart';
 import 'package:e_project/listing_attractions_screens.dart';
 import 'package:e_project/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: HomeScreenUi(),
     );
   }
 }

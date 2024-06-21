@@ -15,6 +15,9 @@ class _EditAttractionScreenState extends State<EditAttractionScreen> {
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   late TextEditingController _imageUrlController;
+  late TextEditingController _contactInfoController;
+  late TextEditingController _openingHoursController;
+  late TextEditingController _ratingsController;
 
   @override
   void initState() {
@@ -22,6 +25,9 @@ class _EditAttractionScreenState extends State<EditAttractionScreen> {
     _nameController = TextEditingController(text: widget.attraction.name);
     _descriptionController = TextEditingController(text: widget.attraction.description);
     _imageUrlController = TextEditingController(text: widget.attraction.imageUrl);
+    _contactInfoController = TextEditingController(text: widget.attraction.contactInfo);
+    _openingHoursController = TextEditingController(text: widget.attraction.openingHours);
+    _ratingsController = TextEditingController(text: widget.attraction.ratings);
   }
 
   @override
@@ -29,6 +35,9 @@ class _EditAttractionScreenState extends State<EditAttractionScreen> {
     _nameController.dispose();
     _descriptionController.dispose();
     _imageUrlController.dispose();
+    _contactInfoController.dispose();
+    _openingHoursController.dispose();
+    _ratingsController.dispose();
     super.dispose();
   }
 
@@ -62,6 +71,9 @@ class _EditAttractionScreenState extends State<EditAttractionScreen> {
                   name: _nameController.text,
                   description: _descriptionController.text,
                   imageUrl: _imageUrlController.text,
+                  contactInfo: _contactInfoController.text,
+                  openingHours: _openingHoursController.text,
+                  ratings: _ratingsController.text,
                 );
                 Navigator.pop(context, updatedAttraction);
               },
